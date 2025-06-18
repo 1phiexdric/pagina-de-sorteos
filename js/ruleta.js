@@ -8,6 +8,7 @@ window.addEventListener('load', ()=>{
 
 function init() {
     // Elementos del DOM
+    const sonidoRuleta = document.getElementById('sonidoRuleta');
     const wheel = document.getElementById('wheel');
     const spinBtn = document.getElementById('spin-btn');
     const finalWinner = document.getElementById('final-winner');
@@ -25,7 +26,10 @@ function init() {
     generarRuleta(elementos);
 
     form.addEventListener('submit', handleFormSubmit);
-    spinBtn.addEventListener('click', spinWheel);
+    spinBtn.addEventListener('click', ()=>{
+        spinWheel()
+        reproduciraudio()
+    });
     changeThemebtn.addEventListener('click', changeTheme);
     window.addEventListener('resize', updateFontSize);
 
@@ -114,6 +118,7 @@ function init() {
                 clearInterval(rotationInterval);
                 finalWinner.innerHTML = `<p>Felicitaciones</p>`;
                 spinBtn.disabled = false;
+                deteneraudio()
             }
         }, 10);
     }
@@ -124,6 +129,25 @@ function init() {
             myChart.update();
         }
     }
+    function reproduciraudio(){
+    
+            sonidoRuleta.currentTime = 0;
+            sonidoRuleta.volume = 0.5
+            // Intentar reproducir el sonido
+            sonidoRuleta.play()
+                .then(() => {
+                    console.log('Sonido de la ruleta reproduciéndose.');
+                })
+                .catch(error => {
+                    // Capturar y mostrar cualquier error de reproducción (común si no hay interacción del usuario)
+                    console.error('Error al intentar reproducir el sonido de la ruleta:', error);
+                });
+
+}
+function deteneraudio(){
+                sonidoRuleta.pause();
+            sonidoRuleta.currentTime = 0;
+}
 }
 
 function getLabelFontSize() {
@@ -155,3 +179,4 @@ function changeTheme() {
         localStorage.setItem('tema', 'ligth')
     }
 }
+
