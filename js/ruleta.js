@@ -132,7 +132,7 @@ function init() {
     function reproduciraudio(){
     
             sonidoRuleta.currentTime = 0;
-            sonidoRuleta.volume = 0.5
+            sonidoRuleta.volume = 0.3
             // Intentar reproducir el sonido
             sonidoRuleta.play()
                 .then(() => {
